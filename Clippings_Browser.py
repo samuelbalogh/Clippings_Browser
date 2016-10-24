@@ -55,22 +55,32 @@ def list_sources(quotes, sorted_quotes):
 def search_by_source(term, data):
     '''Looks for search term among the sources (authors, books)
     Return matchin entries'''
+    title_text = " ".join([2*'\n', 2* '\t', 'Showing results for ', '"', term, '"', 2* '\t'])
+    subtitle_text = " ".join([2*'\n', 2* '\t', '--- 5 results per page. Press RETURN to continue. --- \n'])
+    title = color.format(title_text, color.red)
+    subtitle = color.format(subtitle_text, color.red)
     for source, quotes in data.items():
         if term.lower() in source.lower():
             os.system('clear')
-            print(2*'\n', 7* '\t', 'Showing results for ', '"', term, '"')
-            print(2*'\n', 6* '\t', '--- Showing 5 results per page. Press RETURN to continue. --- \n')
-            for i in range(len(quotes)):
-                if i!=0 and i % 5 == 0:
+            print(title)
+            print(subtitle)
+            print(5 * '\n')
+            for index in range(len(quotes)):
+                if index!=0 and index % 5 == 0:
                     input()
                     os.system('clear')
-                    print(2*'\n', 7* '\t', 'Showing results for ', term)
-                    print(2*'\n', 6* '\t', '--- Showing 5 results per page. Press RETURN to continue. --- \n')
-                i = quotes[i]
-                i = color.format(i, color.green)
-                print('\n -', i)
-
-            
+                    print(title)
+                    print(subtitle)
+                    print(5 * '\n')
+                quote = quotes[index]
+                quote = color.format(quote, color.green)
+                print('\n -', quote)
+                if str(index)[-1] == '4' or str(index)[-1] == '9':
+                        text = 'Press RETURN to continue . . . '
+                        text = color.format(text, color.blink)
+                        print(5 * '\n', text)
+                
+                
 def main():
     quotes, sorted_by_title_len, sorted_by_quotes_num= build_library(data)
     if 'find quotes from author' in " ".join(sys.argv):
