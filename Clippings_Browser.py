@@ -6,6 +6,8 @@ import curses
 from curses import wrapper
 import re
 import sys
+import term as color
+import os
 
 data = 'data/export.txt'
 quotes = {}
@@ -55,9 +57,19 @@ def search_by_source(term, data):
     Return matchin entries'''
     for source, quotes in data.items():
         if term.lower() in source.lower():
-            for i in quotes:
+            os.system('clear')
+            print(2*'\n', 7* '\t', 'Showing results for ', '"', term, '"')
+            print(2*'\n', 6* '\t', '--- Showing 5 results per page. Press RETURN to continue. --- \n')
+            for i in range(len(quotes)):
+                if i!=0 and i % 5 == 0:
+                    input()
+                    os.system('clear')
+                    print(2*'\n', 7* '\t', 'Showing results for ', term)
+                    print(2*'\n', 6* '\t', '--- Showing 5 results per page. Press RETURN to continue. --- \n')
+                i = quotes[i]
+                i = color.format(i, color.green)
                 print('\n -', i)
-                
+
             
 def main():
     quotes, sorted_by_title_len, sorted_by_quotes_num= build_library(data)
