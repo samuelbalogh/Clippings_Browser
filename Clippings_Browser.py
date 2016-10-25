@@ -25,6 +25,7 @@ def build_library():
     return quotes, sorted_by_title_len, sorted_by_quotes_num
     
 def parse_clippings_io(data):
+    '''Parses clippings in the format that is the output of www.clippings.io (separator is --)'''
     with open(data, 'r') as file:
         for line in file.readlines():
             if not line.strip():
@@ -48,6 +49,7 @@ def parse_clippings_io(data):
     return quotes
 
 def parse_my_clippings_txt(clippings):
+    '''Parses clippings in the native Kinlde format (separator is '("==========")'''
     with open(clippings, 'r', encoding='utf-8') as file:
         file_as_list = file.read().split("==========")
         for entry in file_as_list:
@@ -65,6 +67,7 @@ def parse_my_clippings_txt(clippings):
      
 
 def list_sources(quotes, sorted_quotes):
+    '''Lists all sources'''
     for source in quotes:
         print(source)
     for i in sorted_quotes:
@@ -81,6 +84,7 @@ def search_by_source(search_term, data):
          
     
 def display(search_term, results, items=5):
+    '''Displays search results on the console with fancy coloring'''
     title_text = " ".join(['\n', 2* '\t', 'Showing results for ', '"', search_term, '"', 2* '\t'])
     subtitle_text = " ".join(['\n', '  \t', ' - - -  5 results per page. Press RETURN to continue. - - -,', 3*'\n'])
     title = color.format(title_text, color.red)
@@ -102,6 +106,7 @@ def display(search_term, results, items=5):
                 print(4 * '\n', text)
                     
 def get_random_quote_from(search_results):
+    '''Returns a dictionary that contains search results for the query string, but with the quotes in random order.'''
     random_order_dict = {}
     for source, quotes in search_results.items():
         list_of_quotes = quotes
@@ -114,6 +119,7 @@ def main():
     parse_args()
           
 def parse_args():
+    '''Parse command line arguments and act accordingly'''
     if 'find quotes from author' in " ".join(sys.argv):
         author = " ".join(sys.argv[sys.argv.index('author')+1:])
         results = search_by_source(author, quotes)
@@ -135,7 +141,6 @@ def parse_args():
     elif 'list' in sys.argv:
         list_sources(sorted_by_quotes_num, sorted_by_title_len)
     elif 'random quote from' in " ".join(sys.argv):
-        print('HERE WE GO')
         source = " ".join(sys.argv[sys.argv.index('from')+1:])
         results = search_by_source(source, quotes)
         random_quotes = get_random_quote_from(results)
@@ -145,7 +150,6 @@ def parse_args():
         results = search_by_source(term, quotes)
         display(term, results)
     sys.exit()
-    
 
 main()
 
