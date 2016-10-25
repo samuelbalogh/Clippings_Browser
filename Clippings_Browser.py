@@ -2,12 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from collections import OrderedDict
-import curses
-from curses import wrapper
-import re
 import sys
 import term as color
 import os
+import random
 
 data = 'data/export.txt' # exported from clippings.io
 clippings = 'data/my_clippings.txt'  # original Kindle clippings format
@@ -40,14 +38,12 @@ def parse_clippings_io(data):
                         quote = line[:line.index(separator)]
                         source = line[line.index(separator)+2:line.index(location)-2]
                     else:
-                        # print('\n \n could not parse source properly, leaving this one out')
                         continue
                     try:
                         quotes[source].append(quote)
                     except KeyError:
                         quotes[source] = [quote]
                 except ValueError:
-                    # print('Failed to parse quote:', line)
                     continue
     return quotes
 
@@ -84,29 +80,40 @@ def search_by_source(search_term, data):
     return results
          
     
-def display(search_term, results):
+def display(search_term, results, items=5):
     title_text = " ".join(['\n', 2* '\t', 'Showing results for ', '"', search_term, '"', 2* '\t'])
     subtitle_text = " ".join(['\n', '  \t', ' - - -  5 results per page. Press RETURN to continue. - - -,', 3*'\n'])
     title = color.format(title_text, color.red)
     subtitle = color.format(subtitle_text, color.red)
     for source, quotes in results.items():
+        print(quotes)
         os.system('clear')
         print(title, '\n', subtitle, '\n', 'Showing quotes from:', source, 4 * '\n')
         for index in range(len(quotes)):
-            if index!=0 and index % 5 == 0:
+            if index!=0 and index % items == 0:
                 input()
                 os.system('clear')
                 print(title, '\n', subtitle, '\n', 'Showing quotes from:', source, 4 * '\n')
             quote = quotes[index]
             quote = color.format(quote, color.green)
             print('\n -', quote)
-            if str(index)[-1] == '4' or str(index)[-1] == '9':
+            if index % items == items-1:
                 text = color.format('Press RETURN to continue . . . ', color.blink)
                 print(4 * '\n', text)
-                
-          
+                    
+def get_random_quote_from(search_results):
+    random_order_dict = {}
+    for source, quotes in search_results.items():
+        list_of_quotes = quotes
+        random.shuffle(list_of_quotes)
+        random_order_dict[source] = list_of_quotes
+    return random_order_dict
+
 def main():
     quotes, sorted_by_title_len, sorted_by_quotes_num = build_library()
+    parse_args()
+          
+def parse_args():
     if 'find quotes from author' in " ".join(sys.argv):
         author = " ".join(sys.argv[sys.argv.index('author')+1:])
         results = search_by_source(author, quotes)
@@ -127,11 +134,18 @@ def main():
             display(book, results)
     elif 'list' in sys.argv:
         list_sources(sorted_by_quotes_num, sorted_by_title_len)
+    elif 'random quote from' in " ".join(sys.argv):
+        print('HERE WE GO')
+        source = " ".join(sys.argv[sys.argv.index('from')+1:])
+        results = search_by_source(source, quotes)
+        random_quotes = get_random_quote_from(results)
+        display(source, random_quotes, items=1)
     else:
         term = " ".join(sys.argv[1:])
         results = search_by_source(term, quotes)
         display(term, results)
     sys.exit()
+    
 
 main()
 
