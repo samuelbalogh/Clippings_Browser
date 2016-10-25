@@ -2,10 +2,20 @@
 
 A simple command line app for Unix systems to browser your Kindle clippings, written in Python.
 
+### Background
+
+I wanted a program that can quickly sort my clippings and display them in a simple way. 
+
+The script can parse two types of data.
+
+1. The raw format of your Kindle clippings file, found in the 'documents' folder of your Kindle. Usually named *My_clippings.txt.*
+This file uses multiple lines for a clipping and uses '========' as the separator.
+2. The format from clippings.io (a good service, by the way, just not enough). They use '--' as separator and clippings take up a single line.
+
 
 ### Usage
 
-Get quote from book
+#### Get quotes from author/book
 
 ```
 $ python Clippings_Browser.py find quote from book you are not so smart
@@ -32,7 +42,8 @@ Output:
  - You have a deep desire to be right all of the time and a deeper desire to see yourself in a positive light both morally and behaviorally. You can stretch your mind pretty far to achieve these goals.
 ```
 
-Get random quote
+    
+#### Get random quote from author/book
 
 ```
 $ python Clippings_Browser.py get random quote from Scott Adams
