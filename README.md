@@ -5,16 +5,46 @@ A simple command line app for Unix systems to browser your Kindle clippings, wri
 
 ### Usage
 
+Get quote from book
+
+```
+$ python Clippings_Browser.py find quote from book you are not so smart
+```
+
+Output:
+```
+             Showing results for  " you are not so smart " 		 
+ 
+   	  - - -  5 results per page. Press RETURN to continue. - - -, 
+
+ Showing quotes from: - David McRaney, You Are Not So Smart 
+
+
+
+ - Yet you lock your keys in the car. You forget what it was you were about to say. You get fat. You go broke. Others do it too. From bank crises to sexual escapades, we can all be really stupid sometimes.
+
+ - the world around you is the product of dealing with these biases, not overcoming them.
+
+ - Your brain is better at seeing the world in some ways, like social situations, and not so good in others, like logic puzzles with numbered cards.
+
+ - You have a deep desire to be right all of the time and a deeper desire to see yourself in a positive light both morally and behaviorally.
+
+ - You have a deep desire to be right all of the time and a deeper desire to see yourself in a positive light both morally and behaviorally. You can stretch your mind pretty far to achieve these goals.
+```
+
+Get random quote
+
 ```
 $ python Clippings_Browser.py get random quote from Scott Adams
 ```
+
+
+Output:
 
 ```
                 Showing results for  " scott adams " 		 
  
    	  - - -  5 results per page. Press RETURN to continue. - - -, 
-
-
  
  Showing quotes from: - Scott Adams, How to Fail at Almost Everything and Still Win Big: Kind of the Story of My Life 
 
@@ -23,5 +53,7 @@ $ python Clippings_Browser.py get random quote from Scott Adams
  - When I combined my meager business skills with my bad art skills and my fairly ordinary writing talent, the mixture was powerful.
  
  
+ 
+  Press RETURN to continue . . . 
 ```
 
