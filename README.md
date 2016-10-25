@@ -6,7 +6,7 @@ A simple command line app for Unix systems to browser your Kindle clippings, wri
 
 I wanted a program that can quickly sort my clippings and display them in a simple way. 
 
-The script can parse two types of data.
+The script can parse two types of data:
 
 1. The raw format of your Kindle clippings file, found in the 'documents' folder of your Kindle. Usually named *My_clippings.txt.*
 This file uses multiple lines for a clipping and uses '========' as the separator.
