@@ -90,7 +90,6 @@ def display(search_term, results, items=5):
     title = color.format(title_text, color.red)
     subtitle = color.format(subtitle_text, color.red)
     for source, quotes in results.items():
-        print(quotes)
         os.system('clear')
         print(title, '\n', subtitle, '\n', 'Showing quotes from:', source, 4 * '\n')
         for index in range(len(quotes)):
@@ -113,6 +112,17 @@ def get_random_quote_from(search_results):
         random.shuffle(list_of_quotes)
         random_order_dict[source] = list_of_quotes
     return random_order_dict
+
+def get_random_quote(data):
+    random_source = random.choice(list(data.keys()))
+    random_quote = random.randint(0, (len(quotes[random_source])))
+    quote = {}
+    try:
+        quote[random_source] = [quotes[random_source][random_quote]]
+    except IndexError:
+        get_random_quote(data)
+    return quote
+    
 
 def main():
     quotes, sorted_by_title_len, sorted_by_quotes_num = build_library()
@@ -151,10 +161,13 @@ def parse_args():
     elif 'list' in sys.argv:
         list_sources(sorted_by_quotes_num, sorted_by_title_len)
     elif 'random quote from' in " ".join(sys.argv):
-        source = " ".join(sys.argv[sys.argv.index('from')+1:])
-        results = search_by_source(source, quotes)
-        random_quotes = get_random_quote_from(results)
-        display(source, random_quotes, items=1)
+        if 'all' in " ".join(sys.argv[sys.argv.index('from')+1:]):
+            display('all', get_random_quote(quotes), 1)
+        else:
+            source = " ".join(sys.argv[sys.argv.index('from')+1:])
+            results = search_by_source(source, quotes)
+            random_quotes = get_random_quote_from(results)
+            display(source, random_quotes, items=1)
     else:
         term = " ".join(sys.argv[1:])
         results = search_by_source(term, quotes)
@@ -166,9 +179,6 @@ main()
     
 def browse_clippings():
     '''Browse library interactively'''
-    
-def get_random_quote():
-    '''Gets random quote from the entire library'''
     
 def get_random_source():
     '''Return random book from the library'''
