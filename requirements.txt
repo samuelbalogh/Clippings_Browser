@@ -1,0 +1,2 @@
+ordereddict==1.1
+py-term==0.6
