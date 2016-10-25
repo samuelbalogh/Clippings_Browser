@@ -15,7 +15,7 @@ location = 'loc.'
 page = 'pg.'
 
 def build_library():
-    '''Builds clippings library from data (usually My clippings.txt)
+    '''Builds clippings library from 'data' and 'clippings' above
     Returns quotes and sorted_quotes (sorted by number of quotes from source)'''
     quotes1 = parse_clippings_io(data)
     quotes2 = parse_my_clippings_txt(clippings)
@@ -49,7 +49,7 @@ def parse_clippings_io(data):
     return quotes
 
 def parse_my_clippings_txt(clippings):
-    '''Parses clippings in the native Kinlde format (separator is '("==========")'''
+    '''Parses clippings in the native Kindle format (separator is '("==========")'''
     with open(clippings, 'r', encoding='utf-8') as file:
         file_as_list = file.read().split("==========")
         for entry in file_as_list:
@@ -117,6 +117,16 @@ def get_random_quote_from(search_results):
 def main():
     quotes, sorted_by_title_len, sorted_by_quotes_num = build_library()
     parse_args()
+    
+'''
+
+TODO:
+
+1. add argparse
+2. add command_line_runner
+3. refactor
+
+'''
           
 def parse_args():
     '''Parse command line arguments and act accordingly'''
@@ -161,7 +171,7 @@ def get_random_quote():
     '''Gets random quote from the entire library'''
     
 def get_random_source():
-    '''Return random book the library'''
+    '''Return random book from the library'''
         
 def mark_as_favorite():
     '''Marks currently displayed quote as favorite'''
