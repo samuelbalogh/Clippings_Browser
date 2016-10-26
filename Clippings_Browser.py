@@ -1,15 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''
+"""
 
 TODO:
 
 1. add argparse X
-2. add command_line_runner
+2. add command_line_runner X
 3. refactor
+4. add following functionality:
 
-'''
+    def browse_clippings():
+        '''Browse library interactively'''
+
+    def mark_as_favorite():
+        '''Marks currently displayed quote as favorite'''
+
+    def get_favorites():
+        '''Returns favorite quotes'''
+
+    def save_favorites():
+        '''Saves favorites to .txt file'''
+
+"""
 
 from collections import OrderedDict
 import sys
@@ -78,14 +91,14 @@ def parse_my_clippings_txt(clippings):
 
 
 def list_sources(quotes, sorted_quotes):
-    '''Lists all sources'''
-    print('Sources ordered by number of highlights in them (top 10): \n')
+    '''Lists all sources sorted by number of highlights'''
+    print('Sources sorted by number of highlights in them (top 10): \n')
     for i in range(len(list(quotes))):
         print(list(quotes)[i])
         if i!=0 and i % 10 == 0:
             input()
             os.system('clear')
-            print('Sources ordered by number of highlights in them (continued): \n')
+            print('Sources sorted by number of highlights in them (continued): \n')
 
 
 def search_by_source(search_term, data):
@@ -100,11 +113,9 @@ def search_by_source(search_term, data):
 
 def display(search_term, results, items=5):
     '''Displays search results on the console with fancy coloring'''
-    title_text = " ".join([3*'\n', 'Showing results for ', '"', search_term, '"', 2* '\t'])
     per_page = 'result' if items == 1 else 'results'
-    subtitle_text = " ".join([str(items), per_page, 'per page. ', 3*'\n'])
-    title = t.red + title_text
-    subtitle = subtitle_text + t.normal
+    title = t.red + " ".join([3*'\n', 'Showing results for ', '"', search_term, '"', 2* '\t'])
+    subtitle = " ".join([str(items), per_page, 'per page. ', 3*'\n']) + t.normal
     for source, clippings in results.items():
         book_info = [title, '\n', subtitle, 2*'\n', 'Showing clippings from: \n', source[2:], 4 * '\n']
         os.system('clear')
@@ -117,10 +128,9 @@ def display(search_term, results, items=5):
                     quit()
                 os.system('clear')
                 print(" ".join(book_info))
-            quote = clippings[index]
-            quote = t.green + quote
+            quote = t.green + clippings[index]
             print('\n -', quote)
-            if index % items == items-1:
+            if index == 0 or index % items == items-1:
                 text =  t.normal + t.blink + 'Press RETURN to continue . . .'   
                 with t.location(t.width - 30, t.height - 1):
                     print(text)
@@ -153,6 +163,7 @@ def get_random_quote(data):
     return quote
 
 def get_parser():
+    '''Parses command line arguments'''
     parser = argparse.ArgumentParser(description='Kindle clippings from the command line')
     parser.add_argument('query', metavar='QUERY', type=str, nargs='*', help='the source of the clippings: author, book title, artcile, etc')
     parser.add_argument('-n', '--number_of_clippings', help='number of clippings to display per page', default=5, type=int)
@@ -161,6 +172,7 @@ def get_parser():
     return parser
 
 def main():
+    '''Command line runner'''
     parser = get_parser()
     args = vars(parser.parse_args())
     args['query'] = ' '.join(args['query'])
@@ -176,7 +188,7 @@ def main():
             random_quotes = get_random_quote_from(results)
             display(query, random_quotes, items)
         else:
-            display('all', get_random_quote(quotes), items)
+            display('all', get_random_quote(quotes), 1)
     elif not query:
         parser.print_help()
     else:
@@ -185,27 +197,8 @@ def main():
     input()
     sys.exit()
 
-    
 t = Terminal()
 
 with t.fullscreen():
     quotes, sorted_by_title_len, sorted_by_quotes_num = build_library()
-    main()
-    input()
-    
-
-    def browse_clippings():
-        '''Browse library interactively'''
-
-    def get_random_source():
-        '''Return random book from the library'''
-
-    def mark_as_favorite():
-        '''Marks currently displayed quote as favorite'''
-
-    def get_favorites():
-        '''Returns favorite quotes'''
-
-    def save_favorites():
-        '''Saves favorites to .txt file'''
-
+    main()  
