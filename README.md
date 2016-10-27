@@ -15,56 +15,82 @@ This file uses multiple lines for a clipping and uses '========' as the separato
 
 ### Usage
 
-#### Get quotes from author/book
+positional arguments:
+  QUERY                 the source of the clippings: author, book title,
+                        artcile, etc
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NUMBER_OF_CLIPPINGS, --number_of_clippings NUMBER_OF_CLIPPINGS
+                        number of clippings to display per page
+  -l, --list            view list of sources (authors and books)
+  -r, --random          get random clipping
+
+
+
+##### Get quotes from author/book
 
 ```
-$ python Clippings_Browser.py find quote from book you are not so smart
+$ python Clippings_Browser.py Scott Adams -n 3
 ```
 
 Output:
 ```
-             Showing results for  " you are not so smart " 		 
- 
-   	  - - -  5 results per page. Press RETURN to continue. - - -, 
+Press Ctrl + C to exit...
 
- Showing quotes from: - David McRaney, You Are Not So Smart 
-
+ Showing results for  " Scott Adams " 		 
+ 3 results per page.  
 
 
- - Yet you lock your keys in the car. You forget what it was you were about to say. You get fat. You go broke. Others do it too. From bank crises to sexual escapades, we can all be really stupid sometimes.
+ Showing clippings from: 
+ Scott Adams, How to Fail at Almost Everything and Still Win Big: Kind of the Story of My Life 
 
- - the world around you is the product of dealing with these biases, not overcoming them.
 
- - Your brain is better at seeing the world in some ways, like social situations, and not so good in others, like logic puzzles with numbered cards.
+ * All I know for sure is that I pursued a conscious strategy of managing my opportunities in a way that would make it easier for luck to find me.
 
- - You have a deep desire to be right all of the time and a deeper desire to see yourself in a positive light both morally and behaviorally.
 
- - You have a deep desire to be right all of the time and a deeper desire to see yourself in a positive light both morally and behaviorally. You can stretch your mind pretty far to achieve these goals.
+ * Passionate people who fail don’t get a chance to offer their advice to the rest of us. But successful passionate people are writing books and answering interview questions about their secrets for success every day. Naturally those successful people want you to believe that success is a product of their awesomeness, but they also want to retain some humility. You can’t be humble and say, “I succeeded because I am far smarter than the average person.” But you can say your passion was a key to your success,
+
+ * Success caused passion more than passion caused success.
+
+                                                                      Press RETURN to continue 
+             
 ```
 
     
-#### Get random quote from author/book
+##### Get random quote from author/book
 
 ```
-$ python Clippings_Browser.py get random quote from Scott Adams
+$ python Clippings_Browser.py Chris Hadfield -r
 ```
 
 
 Output:
 
 ```
-                Showing results for  " scott adams " 		 
+ Press Ctrl + C to exit...
+
+ Showing results for  " Hadfield " 		 
+ 5 results per page.  
  
-   	  - - -  5 results per page. Press RETURN to continue. - - -, 
- 
- Showing quotes from: - Scott Adams, How to Fail at Almost Everything and Still Win Big: Kind of the Story of My Life 
+
+ Showing clippings from: 
+ Chris Hadfield, An Astronaut's Guide to Life on Earth 
 
 
+ * The life of an astronaut is one of simulating, practicing and anticipating, trying to build the necessary skills and create the correct mind-set.
 
- - When I combined my meager business skills with my bad art skills and my fairly ordinary writing talent, the mixture was powerful.
- 
- 
- 
-  Press RETURN to continue . . . 
+
+ * the North American subculture of pretense, where watching Top Chef is the same thing as knowing how to cook.
+
+ * Beatles’ “Here Comes the Sun”
+
+ * just the pleasantly selfish simplicity of being responsible only for myself.
+
+ * stern taskmaster
+
+
+                                                                      Press RETURN to continue . .
+
 ```
 

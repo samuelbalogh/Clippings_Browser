@@ -31,8 +31,8 @@ import random
 from blessings import Terminal
 import argparse
 
-data = 'data/export.txt' # exported from clippings.io
-clippings = 'data/my_clippings.txt'  # original Kindle clippings format
+data = os.path.abspath('data/export.txt') # exported from clippings.io
+clippings = os.path.abspath('data/my_clippings.txt') # original Kindle clippings format
 quotes = {}
 separator = ' -- '
 location = 'loc.'
@@ -128,14 +128,14 @@ def display(search_term, results, items=5):
                     quit()
                 os.system('clear')
                 print(" ".join(book_info))
-            quote = t.green + clippings[index]
-            print('\n -', quote)
-            if index == 0 or index % items == items-1:
+            quote = t.red + ' * ' +  t.green  + clippings[index] + '\n'
+            print(quote)
+            if index == 0 or index % items == 0:
                 text =  t.normal + t.blink + 'Press RETURN to continue . . .'   
                 with t.location(t.width - 30, t.height - 1):
                     print(text)
                 with t.location(0, 0):
-                    print('Press Ctrl + C to exit...')
+                    print(t.normal + ' Press Ctrl + C to exit...')
         try:
             input()
         except KeyboardInterrupt:
