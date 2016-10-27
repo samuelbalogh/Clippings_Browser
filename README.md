@@ -15,6 +15,7 @@ This file uses multiple lines for a clipping and uses '========' as the separato
 
 ### Usage
 
+```
 positional arguments:
   QUERY                 the source of the clippings: author, book title,
                         artcile, etc
@@ -25,7 +26,7 @@ optional arguments:
                         number of clippings to display per page
   -l, --list            view list of sources (authors and books)
   -r, --random          get random clipping
-
+```
 
 
 ##### Get quotes from author/book
