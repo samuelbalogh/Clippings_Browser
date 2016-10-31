@@ -13,6 +13,13 @@ This file uses multiple lines for a clipping and uses '========' as the separato
 2. The format from clippings.io (a good service, by the way, just not enough). They use '--' as separator and clippings take up a single line.
 
 
+### Quickstart
+
+1. Download [zip](https://github.com/MaxMontoro/Clippings_Browser/archive/master.zip).
+2. Replace my_clippings.txt with your clippings library (it can be found in the documents folder of your Kindle). If you are using clippings.io, you can export your clippings using their format. In this case, name your file export.txt.
+3. Run `python Clippings_Browser.py [author name]`
+4. Enjoy.
+
 ### Usage
 
 ```

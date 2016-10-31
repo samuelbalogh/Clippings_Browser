@@ -31,7 +31,7 @@ import random
 from blessings import Terminal
 import argparse
 
-data = os.path.abspath('data/export.txt') # exported from clippings.io
+data = os.path.abspath('data/export2.txt') # exported from clippings.io
 clippings = os.path.abspath('data/my_clippings.txt') # original Kindle clippings format
 quotes = {}
 separator = ' -- '
@@ -50,27 +50,30 @@ def build_library():
 
 def parse_clippings_io(data):
     '''Parses clippings in the format that is the output of www.clippings.io (separator is --)'''
-    with open(data, 'r') as file:
-        for line in file.readlines():
-            if not line.strip():
-                continue
-            else:
-                try:
-                    if page in line:
-                        quote = line[:line.index(separator)]
-                        source = line[line.index(separator)+2:line.index(page)-1]
-                    elif location in line:
-                        quote = line[:line.index(separator)]
-                        source = line[line.index(separator)+2:line.index(location)-2]
-                    else:
-                        continue
-                    try:
-                        quotes[source].append(quote)
-                    except KeyError:
-                        quotes[source] = [quote]
-                except ValueError:
+    try:
+        with open(data, 'r') as file:
+            for line in file.readlines():
+                if not line.strip():
                     continue
-    return quotes
+                else:
+                    try:
+                        if page in line:
+                            quote = line[:line.index(separator)]
+                            source = line[line.index(separator)+2:line.index(page)-1]
+                        elif location in line:
+                            quote = line[:line.index(separator)]
+                            source = line[line.index(separator)+2:line.index(location)-2]
+                        else:
+                            continue
+                        try:
+                            quotes[source].append(quote)
+                        except KeyError:
+                            quotes[source] = [quote]
+                    except ValueError:
+                        continue
+        return quotes
+    except FileNotFoundError:
+        return {}
 
 def parse_my_clippings_txt(clippings):
     '''Parses clippings in the native Kindle format (separator is '("==========")'''
