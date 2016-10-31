@@ -16,7 +16,7 @@ This file uses multiple lines for a clipping and uses '========' as the separato
 ### Quickstart
 
 1. Download [zip](https://github.com/MaxMontoro/Clippings_Browser/archive/master.zip).
-2. Replace my_clippings.txt with your clippings library (it can be found in the documents folder of your Kindle). If you are using clippings.io, you can export your clippings using their format. In this case, name your file export.txt.
+2. Replace data/my_clippings.txt with your clippings library (it can be found in the documents folder of your Kindle). If you are using clippings.io, you can export your clippings using their format. In this case, name your file export.txt.
 3. Run `python Clippings_Browser.py [author name]`
 4. Enjoy.
 
