@@ -25,7 +25,7 @@ This file uses multiple lines for a clipping and uses '========' as the separato
 ```
 positional arguments:
   QUERY                 the source of the clippings: author, book title,
-                        artcile, etc
+                        article, etc
 
 optional arguments:
   -h, --help            show this help message and exit
