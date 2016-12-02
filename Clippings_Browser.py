@@ -8,7 +8,10 @@ TODO:
 1. add argparse X
 2. add command_line_runner X
 3. refactor
-4. add following functionality:
+4. introduce classes: 
+    Page is a set of quotes displayed on one page
+    Result is a linked list of Page instances: possibility for pagination (nxt, prv)
+5. add following functionality:
 
     def browse_clippings():
         '''Browse library interactively'''
@@ -31,16 +34,31 @@ import random
 from blessings import Terminal
 import argparse
 
-data = os.path.abspath('data/export2.txt') # exported from clippings.io
-clippings = os.path.abspath('data/my_clippings.txt') # original Kindle clippings format
+data = '/Users/baloghsamuel/python_projects/Clippings_Browser/data/export2.txt' # exported from clippings.io
+clippings = '/Users/baloghsamuel/python_projects/Clippings_Browser/data/my_clippings.txt' # original Kindle clippings format
 quotes = {}
 separator = ' -- '
 location = 'loc.'
 page = 'pg.'
 
+
+class LibraryBuilder(object):
+    pass
+
+class Library(object):
+    pass
+
+class Page(object):
+    pass
+
+class Results(object):
+    pass
+
+
+
 def build_library():
-        '''Builds clippings library from 'data' and 'clippings' above
-        Returns quotes and sorted_quotes (sorted by number of quotes from source)'''
+        ''' Builds clippings library from 'data' and 'clippings' above
+        Returns quotes and sorted_quotes (sorted by number of quotes from source) '''
         quotes1 = parse_clippings_io(data)
         quotes2 = parse_my_clippings_txt(clippings)
         quotes = dict(quotes1, **quotes2)
@@ -49,7 +67,7 @@ def build_library():
         return quotes, sorted_by_title_len, sorted_by_quotes_num
 
 def parse_clippings_io(data):
-    '''Parses clippings in the format that is the output of www.clippings.io (separator is --)'''
+    ''' Parses clippings in the format that is the output of www.clippings.io (separator is --) '''
     try:
         with open(data, 'r') as file:
             for line in file.readlines():
@@ -76,7 +94,7 @@ def parse_clippings_io(data):
         return {}
 
 def parse_my_clippings_txt(clippings):
-    '''Parses clippings in the native Kindle format (separator is '("==========")'''
+    ''' Parses clippings in the native Kindle format (separator is '("==========") '''
     with open(clippings, 'r', encoding='utf-8') as file:
         file_as_list = file.read().split("==========")
         for entry in file_as_list:
@@ -94,7 +112,7 @@ def parse_my_clippings_txt(clippings):
 
 
 def list_sources(quotes, sorted_quotes):
-    '''Lists all sources sorted by number of highlights'''
+    ''' Lists all sources sorted by number of highlights '''
     print('Sources sorted by number of highlights in them (top 10): \n')
     for i in range(len(list(quotes))):
         print(list(quotes)[i])
@@ -105,8 +123,8 @@ def list_sources(quotes, sorted_quotes):
 
 
 def search_by_source(search_term, data):
-    '''Looks for search term among the sources (authors, books)
-    Returns matching entries as dict'''
+    ''' Looks for search term among the sources (authors, books)
+        Returns matching entries as dict  '''
     results = {}
     for source, quotes in data.items():
         if search_term.lower() in source.lower():
@@ -115,7 +133,7 @@ def search_by_source(search_term, data):
 
 
 def display(search_term, results, items=5):
-    '''Displays search results on the console with fancy coloring'''
+    ''' Displays search results on the console with fancy coloring '''
     per_page = 'result' if items == 1 else 'results'
     title = t.red + " ".join([3*'\n', 'Showing results for ', '"', search_term, '"', 2* '\t'])
     subtitle = " ".join([str(items), per_page, 'per page. ', 3*'\n']) + t.normal
@@ -146,7 +164,7 @@ def display(search_term, results, items=5):
     display('all', get_random_quote(quotes), 1)
 
 def get_random_quote_from(search_results):
-    '''Returns a dictionary that contains search results for the query string, but with the quotes in random order.'''
+    ''' Returns a dictionary that contains search results for the query string, but with the quotes in random order. '''
     random_order_dict = {}
     for source, quotes in search_results.items():
         list_of_quotes = quotes
@@ -155,7 +173,7 @@ def get_random_quote_from(search_results):
     return random_order_dict
 
 def get_random_quote(data):
-    '''Returns random quote from the whole library'''
+    ''' Returns random quote from the whole library '''
     random_source = random.choice(list(data.keys()))
     random_quote = random.randint(0, (len(quotes[random_source])))
     quote = {}
@@ -166,7 +184,7 @@ def get_random_quote(data):
     return quote
 
 def get_parser():
-    '''Parses command line arguments'''
+    ''' Parses command line arguments '''
     parser = argparse.ArgumentParser(description='Kindle clippings from the command line')
     parser.add_argument('query', metavar='QUERY', type=str, nargs='*', help='the source of the clippings: author, book title, artcile, etc')
     parser.add_argument('-n', '--number_of_clippings', help='number of clippings to display per page', default=5, type=int)
@@ -175,7 +193,7 @@ def get_parser():
     return parser
 
 def main():
-    '''Command line runner'''
+    ''' Command line runner '''
     parser = get_parser()
     args = vars(parser.parse_args())
     args['query'] = ' '.join(args['query'])
